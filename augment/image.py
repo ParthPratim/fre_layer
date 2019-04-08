@@ -18,9 +18,10 @@ class ImageAugmentation:
         (gaussian_aug(self.in_img),)
         )
 
-ia = ImageAugmentation("../dataset/sample/Jose_Rosado.jpg").process()
+"""ia = ImageAugmentation("../dataset/sample/Jose_Rosado.jpg").process()
 x = 0
 for imgs in ia:
     for img in imgs:
         print(img[1])
         cv2.imwrite("../dataset/sample/Jose_Rosado_"+img[1]+".jpg",img[0])
+"""
