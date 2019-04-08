@@ -1,5 +1,6 @@
 import numpy as np
 import talos as ta
+import pickle
 from keras.applications import inception_resnet_v2
 from keras import layers
 from keras import models
@@ -53,12 +54,14 @@ class InceptionResnetV2ImageClassifier:
 
     def fit_model(self):
         scan_object = ta.Scan(x, y, model=prepare_model, params=p, grid_downsample=0.1)
-        self.model.save_weights('model_wieghts.h5')
-        self.model.save('model_keras.h5')
+        self.model.save_weights('model/model_wieghts.h5')
+        self.model.save('model/model_keras.h5')
+        with open("model/talos_keras.pkl","wb") as mf:
+            pickle.dump(scan_object,mf)
         history = self.history
         acc = history.history['acc']
         val_acc = history.history['val_acc']
         loss = history.history['loss']
         val_loss = history.history['val_loss']
         print("Accuracy : "+acc+" Val Acc : "+val_acc+" Loss: "+loss+"val_los : "+val_loss)
-        
+    
