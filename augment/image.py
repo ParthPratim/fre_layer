@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
-from tweak import *
+from augment.tweak import *
 
 class ImageAugmentation:
     def __init__(self,img):
-        self.in_img =  cv2.imread(img)
+        self.in_img =  img
         self.augmented = None
 
     def process(self):

@@ -5,7 +5,7 @@ import random
 def resize(in_img,size):
     v = in_img[:]
     size = (int(size[0]),int(size[1]))
-    return cv2.resize(v,size)
+    return cv2.resize(v,size, interpolation = cv2.INTER_AREA)
     # size = (x,y) i.e tupple
 
 def flip(in_img):
@@ -39,17 +39,17 @@ def crop(in_img,size,cords=(0,0)):
     return np.array(v[cords[1]:size[1],cords[0]:size[0]],dtype=np.uint8)
 
 def scale(in_img):
-    black_2 = np.zeros((175,75,3),dtype=np.uint8)
-    black_2_2 = np.zeros((250,175,3),dtype=np.uint8)
-    black_3 = np.zeros((125,125,3),dtype=np.uint8)
-    black_3_2 = np.zeros((250,125,3),dtype=np.uint8)
-    scale_1 = resize(in_img,[250*1.5,250*1.5])
-    scale_2 = resize(in_img,[250*0.3,250*0.3])
-    scale_3 = resize(in_img,[250*0.5,250*0.5])
+    black_2 = np.zeros((45,105,3),dtype=np.uint8)
+    black_2_2 = np.zeros((150,45,3),dtype=np.uint8)
+    black_3 = np.zeros((30,120,3),dtype=np.uint8)
+    black_3_2 = np.zeros((150,30,3),dtype=np.uint8)
+    scale_1 = resize(in_img,[150*1.3,150*1.3])
+    scale_2 = resize(in_img,[150*0.7,150*0.7])
+    scale_3 = resize(in_img,[150*0.8,150*0.8])
     return (
-    (crop(scale_1,(250,250)),"Scale_2.0"),
-    (np.append(np.append(scale_2,black_2,axis=0),black_2_2,axis=1),"Scale_0.3"),
-    (np.append(np.append(scale_3,black_3,axis=0),black_3_2,axis=1),"Scale_0.5"),
+    (crop(scale_1,(150,150)),"Scale_2.0"),
+    (np.append(np.append(scale_2,black_2,axis=0),black_2_2,axis=1),"Scale_0.7"),
+    (np.append(np.append(scale_3,black_3,axis=0),black_3_2,axis=1),"Scale_0.8"),
     )
 
 def adjust_gamma(image, gamma=1.0):
@@ -68,10 +68,10 @@ def gamma_aug(in_img):
 
 def crop_aug(in_img):
     return (
-    (resize(crop(in_img,(250,250),cords=(32,0)),[250,250]),"Resize_X:32"),
-    (resize(crop(in_img,(250,250),cords=(0,32)),[250,250]),"Resize_Y:32"),
-    (resize(crop(in_img,(218,250),cords=(0,0)),[250,250]),"Resize_X:218"),
-    (resize(crop(in_img,(250,218),cords=(0,0)),[250,250]),"Resize_Y:218")
+    (resize(crop(in_img,(150,150),cords=(32,0)),[150,150]),"Resize_X:32"),
+    (resize(crop(in_img,(150,150),cords=(0,32)),[150,150]),"Resize_Y:32"),
+    (resize(crop(in_img,(118,150),cords=(0,0)),[150,150]),"Resize_X:218"),
+    (resize(crop(in_img,(150,118),cords=(0,0)),[150,150]),"Resize_Y:218")
     )
 
 def translate(in_img,M):
@@ -82,10 +82,10 @@ def translate(in_img,M):
 
 def translate_aug(in_img):
     return (
-    (translate(in_img,np.float32([[1,0,32],[0,1,0]])),"Trans_1"),
-    (translate(in_img,np.float32([[1,0,-32],[0,1,0]])),"Trans_2"),
-    (translate(in_img,np.float32([[1,0,0],[0,1,32]])),"Trans_3"),
-    (translate(in_img,np.float32([[1,0,0],[0,1,-32]])),"Trans_4")
+    (translate(in_img,np.float32([[1,0,30],[0,1,0]])),"Trans_1"),
+    (translate(in_img,np.float32([[1,0,-30],[0,1,0]])),"Trans_2"),
+    (translate(in_img,np.float32([[1,0,0],[0,1,30]])),"Trans_3"),
+    (translate(in_img,np.float32([[1,0,0],[0,1,-30]])),"Trans_4")
     )
 
 def add_gaussian_noise(image_in, noise_sigma):
