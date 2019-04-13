@@ -14,7 +14,7 @@ def prepare_model(x_train,y_train,x_val,y_val,params):
     model.add(conv_base)
     model.add(layers.Flatten())
     model.add(layers.Dense(256, activation=params['activation']))
-    model.add(layers.Dense(5, activation='softmax'))
+    model.add(layers.Activation('softmax'))
     conv_base.trainable = False
     model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=2e-5), metrics=['acc'])
     validation_data = [x_val,y_val]
