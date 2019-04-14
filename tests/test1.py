@@ -1,13 +1,13 @@
 import os
 import cv2
 import numpy as np
-from imutils import face_utils
+#from imutils import face_utils
 import pickle
 from sklearn.preprocessing import LabelEncoder
 from augment.image import ImageAugmentation
 from augment.tweak import crop,resize,rotate_by_angle
 import tensorflow as tf
-import mtcnn.mtcnn as MTCNN
+#import mtcnn.mtcnn as MTCNN
 from recog_model.train import InceptionResnetV2ImageClassifier
 #from recog_model.inference import ImageInferenceEngine
 

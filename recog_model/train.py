@@ -1,5 +1,5 @@
 import numpy as np
-import talos as ta
+#import talos as ta
 import pickle
 from keras.applications import InceptionResNetV2
 from keras import layers
@@ -20,7 +20,7 @@ def prepare_model(x_train,y_train,x_val,y_val,params):
     model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=1E-4), metrics=['acc'])
     validation_data = [x_val,y_val]
     history = model.fit(x_train,y_train,
-                        steps_per_epoch=2,
+                        steps_per_epoch=8,
                         epochs=params['epochs'],
                         validation_data=validation_data,
                         validation_steps=4)
@@ -35,7 +35,7 @@ class InceptionResnetV2ImageClassifier:
     'activation':'relu',
     'losses': 'categorical_crossentropy',
     'batch_size': [],
-    'epochs': 12
+    'epochs': 20
     }
 
     tr_imgs, tr_labels, val_imgs, val_labels =  [],[],[],[]
