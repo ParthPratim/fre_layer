@@ -10,10 +10,7 @@ def resize(in_img,size):
 
 def flip(in_img):
     v = in_img[:]
-    return (
-    (np.flipud(v),"Flip_Up_Down"),
-    (np.fliplr(v),"Flip_Left_Right"),
-    )
+    return (np.fliplr(v),"Flip_Left_Right")
 
 def rotate_by_angle(in_img,angle):
     image_center = tuple(np.array(in_img.shape[1::-1]) / 2)
