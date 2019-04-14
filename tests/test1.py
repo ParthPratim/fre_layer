@@ -143,4 +143,4 @@ def test():
     print("LOADING....TRAINING AND VALIDATION SETS")
     irv2.define_data(tr_img_data=np.array(tr_imgs),tr_labels=np.array(tr_labels),classes=celebs,val_img_data=np.array(val_imgs),val_labels=np.array(val_labels))
     print("LOADING....FITTING IRV2 MODEL")
-    #irv2.fit_model()
+    irv2.fit_model()
