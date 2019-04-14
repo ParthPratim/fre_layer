@@ -52,7 +52,7 @@ class InceptionResnetV2ImageClassifier:
         self.val_imgs = val_img_data
         self.val_labels = to_categorical(val_labels,num_classes=5)
         self.classes = classes
-        self.hyper_params['batch_size'] = 8
+        self.hyper_params['batch_size'] = 32
 
     def prepare_model(self,x_train,y_train,x_val,y_val,params):
         conv_base = InceptionResNetV2(weights='imagenet', include_top=False, input_shape=(150,150,3))
@@ -95,7 +95,7 @@ class InceptionResnetV2ImageClassifier:
         val_acc = hist.history['val_acc']
         loss = hist.history['loss']
         val_loss = hist.history['val_loss']
-        print("Accuracy : "+acc+" Val Acc : "+val_acc+" Loss: "+loss+"val_los : "+val_loss)
+        print("Accuracy : "+str(acc)+" Val Acc : "+str(val_acc)+" Loss: "+loss+"val_los : "+str(val_loss))
         
         #p = ta.Evaluate(scan_object)
         #p.evaluate(self.val_imgs,self.val_labels,average='macro')
