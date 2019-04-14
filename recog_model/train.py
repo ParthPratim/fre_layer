@@ -88,8 +88,10 @@ class InceptionResnetV2ImageClassifier:
         #with open("model/"+self.m_asset+".pkl","wb") as mf:
             #pickle.dump(scan_object,mf)
         print("SAVED...MODELS")
-        acc = history.history['acc']
-        val_acc = history.history['val_acc']
-        loss = history.history['loss']
-        val_loss = history.history['val_loss']
-        print("Accuracy : "+acc+" Val Acc : "+val_acc+" Loss: "+loss+"val_los : "+val_loss)
+        #acc = history.history['acc']
+        #val_acc = history.history['val_acc']
+        #loss = history.history['loss']
+        #val_loss = history.history['val_loss']
+        #print("Accuracy : "+acc+" Val Acc : "+val_acc+" Loss: "+loss+"val_los : "+val_loss)
+        p = ta.Evaluate(scan_object)
+        p.evaluate(self.val_imgs,self.val_labels,average='macro')
