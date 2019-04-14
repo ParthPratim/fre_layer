@@ -32,10 +32,10 @@ def prepare_model(x_train,y_train,x_val,y_val,params):
 class InceptionResnetV2ImageClassifier:
 
     hyper_params = {
-    'activation':['relu'],
-    'losses': ['categorical_crossentropy'],
+    'activation':'relu',
+    'losses': 'categorical_crossentropy',
     'batch_size': [],
-    'epochs': [10,20]
+    'epochs': 12
     }
 
     tr_imgs, tr_labels, val_imgs, val_labels =  [],[],[],[]
@@ -52,7 +52,7 @@ class InceptionResnetV2ImageClassifier:
         self.val_imgs = val_img_data
         self.val_labels = to_categorical(val_labels,num_classes=5)
         self.classes = classes
-        self.hyper_params['batch_size'] = [8]
+        self.hyper_params['batch_size'] = 8
 
     def prepare_model(self,x_train,y_train,x_val,y_val,params):
         conv_base = InceptionResNetV2(weights='imagenet', include_top=False, input_shape=(150,150,3))
@@ -81,17 +81,21 @@ class InceptionResnetV2ImageClassifier:
         print(self.hyper_params)
         print(self.val_imgs.shape)
         print(self.val_labels.shape)
-        scan_object = ta.Scan(self.tr_imgs, self.tr_labels,model=prepare_model, params=self.hyper_params,x_val=self.val_imgs,y_val=self.val_labels)
-        print("DONE....TALOS-KERAS Scan() ")
+        
+        #scan_object = ta.Scan(self.tr_imgs, self.tr_labels,model=prepare_model, params=self.hyper_params,x_val=self.val_imgs,y_val=self.val_labels)
+        #print("DONE....TALOS-KERAS Scan() ")
+        
         #self.model.save_weights('model/model_weights.h5')
         #self.model.save('model/model_keras.h5')
         #with open("model/"+self.m_asset+".pkl","wb") as mf:
             #pickle.dump(scan_object,mf)
         print("SAVED...MODELS")
-        #acc = history.history['acc']
-        #val_acc = history.history['val_acc']
-        #loss = history.history['loss']
-        #val_loss = history.history['val_loss']
-        #print("Accuracy : "+acc+" Val Acc : "+val_acc+" Loss: "+loss+"val_los : "+val_loss)
-        p = ta.Evaluate(scan_object)
-        p.evaluate(self.val_imgs,self.val_labels,average='macro')
+        hist , model_d = prepare_model(self.tr_imgs,self.tr_labels,self.val_imgs,self.val_label,self.hyper_params)
+        acc = hist.history['acc']
+        val_acc = hist.history['val_acc']
+        loss = hist.history['loss']
+        val_loss = hist.history['val_loss']
+        print("Accuracy : "+acc+" Val Acc : "+val_acc+" Loss: "+loss+"val_los : "+val_loss)
+        
+        #p = ta.Evaluate(scan_object)
+        #p.evaluate(self.val_imgs,self.val_labels,average='macro')
