@@ -90,7 +90,7 @@ class InceptionResnetV2ImageClassifier:
         #with open("model/"+self.m_asset+".pkl","wb") as mf:
             #pickle.dump(scan_object,mf)
         print("SAVED...MODELS")
-        hist , model_d = prepare_model(self.tr_imgs,self.tr_labels,self.val_imgs,self.val_label,self.hyper_params)
+        hist , model_d = prepare_model(self.tr_imgs,self.tr_labels,self.val_imgs,self.val_labels,self.hyper_params)
         acc = hist.history['acc']
         val_acc = hist.history['val_acc']
         loss = hist.history['loss']
