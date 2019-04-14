@@ -52,7 +52,7 @@ class InceptionResnetV2ImageClassifier:
         self.val_imgs = val_img_data
         self.val_labels = val_labels
         self.classes = classes
-        self.hyper_params['batch_size'] = [32]
+        self.hyper_params['batch_size'] = [8]
 
     def prepare_model(self,x_train,y_train,x_val,y_val,params):
         conv_base = InceptionResNetV2(weights='imagenet', include_top=False, input_shape=(150,150,3))
