@@ -21,7 +21,6 @@ labelencoder_y_1 = LabelEncoder()
 net = cv2.dnn.readNetFromTensorflow(modelFile, configFile)
 
 usr_map =  {}
-
 """
 def detect_faces(img):
     (h, w) = img.shape[:2]
@@ -74,13 +73,13 @@ def generate_augmeted_images():
             height = bbox[3]
             f_img = resize(crop(img,[width,height],cords=(bbox[0],bbox[1])),(150,150))
             tr_imgs.append(f_img)
-            tr_labels.append(celeb)
+            tr_labels.append(celebs)
             augmentation = ImageAugmentation(f_img)
             augmented_imgs = augmentation.process()
             for imgs in augmented_imgs:
                 for img in imgs:
                     tr_imgs.append(img[0])
-                    tr_labels.append(celeb)
+                    tr_labels.append(celebs)
                     cv2.imwrite(img_dir[:-4]+"_"+img[1]+".jpg",img[0])
     print("LOADED....TRAINING SET")
     tr_labels = labelencoder_y_1.fit_transform(tr_labels)
@@ -108,7 +107,7 @@ def load_validation_set():
             height = bbox[3]
             f_img = resize(crop(img,[width,height],cords=(bbox[0],bbox[1])),(150,150))
             val_imgs.append(f_img)
-            val_labels.append(celeb)
+            val_labels.append(usr_map[celeb])
     print("LOADED...VALIDATION SET")
     val_labels = labelencoder_y_1.fit_transform(val_labels)
     return (val_imgs,val_labels)
@@ -117,8 +116,8 @@ def load_validation_set():
 def test():
     tf.logging.set_verbosity(tf.logging.ERROR)
     celebs = 5
-    tr_imgs,tr_labels = None, None
-    val_imgs,val_labels = None, None
+    tr_imgs,tr_labels = None,None
+    val_imgs,val_labels = None,None
     #print("LOADING....InceptionResnetV2ImageClassifier")
     print("LOADING DATASETS")
     with open("dataset/tr_imgs.pkl","rb") as f :
@@ -129,10 +128,19 @@ def test():
         val_imgs = np.array(pickle.load(f))
     with open("dataset/var_labels.pkl","rb") as f :
         val_labels = np.array(pickle.load(f))
+    """with open("dataset/tr_imgs.pkl","wb") as f :
+        pickle.dump(tr_imgs,f)
+    with open("dataset/tr_labels.pkl","wb") as f :
+        pickle.dump(tr_labels,f)
+    with open("dataset/var_imgs.pkl","wb") as f :
+        pickle.dump(val_imgs,f)
+    with open("dataset/var_labels.pkl","wb") as f :
+        pickle.dump(val_labels,f)"""
+
     print("LOADED DATASETS")
     print("LOADING....InceptionResnetV2ImageClassifier")
     irv2 = InceptionResnetV2ImageClassifier(model_asset="Face_Recognizer")
     print("LOADING....TRAINING AND VALIDATION SETS")
     irv2.define_data(tr_img_data=np.array(tr_imgs),tr_labels=np.array(tr_labels),classes=celebs,val_img_data=np.array(val_imgs),val_labels=np.array(val_labels))
     print("LOADING....FITTING IRV2 MODEL")
-    irv2.fit_model()
+    #irv2.fit_model()
