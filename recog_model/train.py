@@ -81,10 +81,10 @@ class InceptionResnetV2ImageClassifier:
         print(self.hyper_params)
         print(self.val_imgs.shape)
         print(self.val_labels.shape)
-        
+
         #scan_object = ta.Scan(self.tr_imgs, self.tr_labels,model=prepare_model, params=self.hyper_params,x_val=self.val_imgs,y_val=self.val_labels)
         #print("DONE....TALOS-KERAS Scan() ")
-        
+
         #self.model.save_weights('model/model_weights.h5')
         #self.model.save('model/model_keras.h5')
         #with open("model/"+self.m_asset+".pkl","wb") as mf:
@@ -95,7 +95,7 @@ class InceptionResnetV2ImageClassifier:
         val_acc = hist.history['val_acc']
         loss = hist.history['loss']
         val_loss = hist.history['val_loss']
-        print("Accuracy : "+str(acc)+" Val Acc : "+str(val_acc)+" Loss: "+loss+"val_los : "+str(val_loss))
-        
+        #print("Accuracy : "+str(acc)+" Val Acc : "+str(val_acc)+" Loss: "+loss+"val_los : "+str(val_loss))
+
         #p = ta.Evaluate(scan_object)
         #p.evaluate(self.val_imgs,self.val_labels,average='macro')

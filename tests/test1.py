@@ -1,9 +1,8 @@
 import os
 import cv2
 import numpy as np
-import dlib
 from imutils import face_utils
-
+import pickle
 from sklearn.preprocessing import LabelEncoder
 from augment.image import ImageAugmentation
 from augment.tweak import crop,resize,rotate_by_angle
@@ -23,6 +22,7 @@ net = cv2.dnn.readNetFromTensorflow(modelFile, configFile)
 
 usr_map =  {}
 
+"""
 def detect_faces(img):
     (h, w) = img.shape[:2]
     blob = cv2.dnn.blobFromImage(cv2.resize(img, (300,300)), 1.0, (300, 300), (103.93, 116.77, 123.68))
@@ -81,7 +81,7 @@ def generate_augmeted_images():
                 for img in imgs:
                     tr_imgs.append(img[0])
                     tr_labels.append(celeb)
-                    #cv2.imwrite(img_dir[:-4]+"_"+img[1]+".jpg",img[0])
+                    cv2.imwrite(img_dir[:-4]+"_"+img[1]+".jpg",img[0])
     print("LOADED....TRAINING SET")
     tr_labels = labelencoder_y_1.fit_transform(tr_labels)
     return (tr_imgs,tr_labels,celebs)
@@ -112,11 +112,24 @@ def load_validation_set():
     print("LOADED...VALIDATION SET")
     val_labels = labelencoder_y_1.fit_transform(val_labels)
     return (val_imgs,val_labels)
+"""
 
 def test():
     tf.logging.set_verbosity(tf.logging.ERROR)
-    tr_imgs,tr_labels,celebs = generate_augmeted_images()
-    val_imgs,val_labels = load_validation_set()
+    celebs = 5
+    tr_imgs,tr_labels = None, None
+    val_imgs,val_labels = None, None
+    #print("LOADING....InceptionResnetV2ImageClassifier")
+    print("LOADING DATASETS")
+    with open("dataset/tr_imgs.pkl","rb") as f :
+        tr_imgs = np.array(pickle.load(f))
+    with open("dataset/tr_labels.pkl","rb") as f :
+        tr_labels = np.array(pickle.load(f))
+    with open("dataset/var_imgs.pkl","rb") as f :
+        val_imgs = np.array(pickle.load(f))
+    with open("dataset/var_labels.pkl","rb") as f :
+        val_labels = np.array(pickle.load(f))
+    print("LOADED DATASETS")
     print("LOADING....InceptionResnetV2ImageClassifier")
     irv2 = InceptionResnetV2ImageClassifier(model_asset="Face_Recognizer")
     print("LOADING....TRAINING AND VALIDATION SETS")
