@@ -17,7 +17,7 @@ def prepare_model(x_train,y_train,x_val,y_val,params):
     model.add(layers.Dense(256, activation=params['activation']))
     model.add(layers.Dense(5, activation='sigmoid'))
     conv_base.trainable = False
-    model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=1E-5), metrics=['acc'])
+    model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=5E-5), metrics=['acc'])
     validation_data = [x_val,y_val]
     history = model.fit(x_train,y_train,
                         steps_per_epoch=8,
@@ -62,7 +62,7 @@ class InceptionResnetV2ImageClassifier:
         model.add(layers.Dense(256, activation=params['activation']))
         model.add(layers.Dense(len(self.classes), activation='softmax'))
         conv_base.trainable = False
-        model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=2e-5), metrics=['acc'])
+        model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=1e-4), metrics=['acc'])
 
         validation_data = [x_val,y_val]
         history = model.fit(x_train,y_train,
