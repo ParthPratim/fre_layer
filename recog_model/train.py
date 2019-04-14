@@ -20,10 +20,10 @@ def prepare_model(x_train,y_train,x_val,y_val,params):
     model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=1E-4), metrics=['acc'])
     validation_data = [x_val,y_val]
     history = model.fit(x_train,y_train,
-                        steps_per_epoch=params['batch_size'],
+                        steps_per_epoch=2,
                         epochs=params['epochs'],
                         validation_data=validation_data,
-                        validation_steps=params['batch_size'])
+                        validation_steps=4)
     #self.history = history
     #self.model = model
     #self.conv_base = conv_base
