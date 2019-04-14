@@ -5,7 +5,7 @@ from keras.applications import InceptionResNetV2
 from keras import layers
 from keras import models
 from keras import optimizers
-#from keras.utils.np_utils import to_categorical
+from keras.utils.np_utils import to_categorical
 
 history = None
 
@@ -33,7 +33,7 @@ class InceptionResnetV2ImageClassifier:
 
     hyper_params = {
     'activation':['relu'],
-    'losses': ['binary_crossentropy'],
+    'losses': ['categorical_crossentropy'],
     'batch_size': [],
     'epochs': [10,20]
     }
@@ -48,9 +48,9 @@ class InceptionResnetV2ImageClassifier:
     def define_data(self,tr_img_data=None,tr_labels=None,classes=0,val_img_data=None,val_labels=None):
         assert (tr_img_data.shape[0] != 0 and tr_labels.shape[0] != 0) , "Empty data not accepted"
         self.tr_imgs = tr_img_data
-        self.tr_labels = tr_labels
+        self.tr_labels = to_categorical(tr_labels,num_classes=5)
         self.val_imgs = val_img_data
-        self.val_labels = val_labels
+        self.val_labels = to_categorical(val_labels,num_classes=5)
         self.classes = classes
         self.hyper_params['batch_size'] = [8]
 
