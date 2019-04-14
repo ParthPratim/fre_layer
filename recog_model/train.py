@@ -5,6 +5,7 @@ from keras.applications import InceptionResNetV2
 from keras import layers
 from keras import models
 from keras import optimizers
+#from keras.utils.np_utils import to_categorical
 
 history = None
 
@@ -14,8 +15,7 @@ def prepare_model(x_train,y_train,x_val,y_val,params):
     model.add(conv_base)
     model.add(layers.Flatten())
     model.add(layers.Dense(256, activation=params['activation']))
-    model.add(layers.Dense(5))
-    model.add(layers.Activation('softmax'))
+    model.add(Dense(5, activation='sigmoid'))
     conv_base.trainable = False
     model.compile(loss=params['losses'], optimizer=optimizers.RMSprop(lr=2e-5), metrics=['acc'])
     validation_data = [x_val,y_val]
