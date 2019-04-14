@@ -9,7 +9,7 @@ class ImageAugmentation:
 
     def process(self):
         return (
-        flip(self.in_img),
+        (flip(self.in_img),),
         rotate(self.in_img),
         scale(self.in_img),
         crop_aug(self.in_img),
